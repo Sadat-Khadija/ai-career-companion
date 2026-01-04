@@ -8,7 +8,7 @@ if (!supabaseUrl || !supabaseAnonKey) {
 }
 
 export function getSupabaseClient(authHeader?: string) {
-  return createClient(supabaseUrl, supabaseAnonKey, {
+  return createClient(supabaseUrl as string, supabaseAnonKey as string, {
     auth: {
       persistSession: false,
       autoRefreshToken: false,
