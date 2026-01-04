@@ -18,12 +18,6 @@ export async function middleware(req: NextRequest) {
       get(name) {
         return req.cookies.get(name)?.value;
       },
-      getAll() {
-        return req.cookies.getAll().map((cookie) => ({
-          name: cookie.name,
-          value: cookie.value,
-        }));
-      },
       set(name, value, options) {
         res.cookies.set({
           name,
@@ -31,13 +25,11 @@ export async function middleware(req: NextRequest) {
           ...options,
         });
       },
-      setAll(cookies) {
-        cookies.forEach(({ name, value, options }) => {
-          res.cookies.set({
-            name,
-            value,
-            ...options,
-          });
+      remove(name, options) {
+        res.cookies.set({
+          name,
+          value: "",
+          ...options,
         });
       },
     },
