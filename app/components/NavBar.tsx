@@ -24,42 +24,42 @@ export function NavBar() {
   }
 
   return (
-    <nav className="border-b bg-white">
+    <nav className="border-b border-[var(--border)] bg-white/90 backdrop-blur">
       <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
-        <Link href={isAuthed ? "/dashboard" : "/login"} className="text-lg font-semibold">
+        <Link href={isAuthed ? "/dashboard" : "/login"} className="text-lg font-semibold text-[var(--primary)]">
           AI Career Companion
         </Link>
 
-        <div className="flex gap-4">
+        <div className="flex gap-3">
           {isAuthed ? (
             <>
               <Link
                 href="/dashboard"
-                className="text-sm font-medium text-gray-700 hover:text-black"
+                className="rounded-md px-3 py-1 text-sm font-medium text-gray-700 hover:text-[var(--primary)]"
               >
                 Dashboard
               </Link>
               <Link
                 href="/jobs/new"
-                className="text-sm font-medium text-gray-700 hover:text-black"
+                className="rounded-md px-3 py-1 text-sm font-medium text-gray-700 hover:text-[var(--primary)]"
               >
                 Add Job
               </Link>
               <Link
                 href="/settings"
-                className="text-sm font-medium text-gray-700 hover:text-black"
+                className="rounded-md px-3 py-1 text-sm font-medium text-gray-700 hover:text-[var(--primary)]"
               >
                 Settings
               </Link>
               <Link
                 href="/privacy"
-                className="text-sm font-medium text-gray-700 hover:text-black"
+                className="rounded-md px-3 py-1 text-sm font-medium text-gray-700 hover:text-[var(--primary)]"
               >
                 Privacy
               </Link>
               <button
                 onClick={logout}
-                className="text-sm font-medium text-gray-700 hover:text-black"
+                className="rounded-md px-3 py-1 text-sm font-medium text-gray-700 hover:text-[var(--primary)]"
               >
                 Logout
               </button>
@@ -68,19 +68,19 @@ export function NavBar() {
             <>
               <Link
                 href="/login"
-                className="text-sm font-medium text-gray-700 hover:text-black"
+                className="rounded-md px-3 py-1 text-sm font-medium text-gray-700 hover:text-[var(--primary)]"
               >
                 Login
               </Link>
               <Link
                 href="/signup"
-                className="text-sm font-medium text-gray-700 hover:text-black"
+                className="rounded-md bg-[var(--primary)] px-3 py-1 text-sm font-medium text-white hover:bg-[var(--primary-strong)]"
               >
                 Sign up
               </Link>
               <Link
                 href="/privacy"
-                className="text-sm font-medium text-gray-700 hover:text-black"
+                className="rounded-md px-3 py-1 text-sm font-medium text-gray-700 hover:text-[var(--primary)]"
               >
                 Privacy
               </Link>

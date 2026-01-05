@@ -75,17 +75,17 @@ export default function NewJobPage() {
   return (
     <div className="mx-auto max-w-2xl space-y-4">
       <div>
-        <h2 className="text-2xl font-semibold">Add a Job Posting</h2>
+        <h2 className="text-3xl font-semibold text-[var(--primary)]">Add a Job Posting</h2>
         <p className="text-gray-600">
           Paste a job description to analyze required skills.
         </p>
       </div>
 
-      <form onSubmit={handleSubmit} className="space-y-4 rounded-xl border bg-white p-6">
+      <form onSubmit={handleSubmit} className="space-y-4 glass-card p-6">
         <div className="grid gap-3">
           <label className="text-sm font-medium">Job title</label>
           <input
-            className="rounded-lg border px-3 py-2"
+            className="input"
             value={form.title}
             onChange={(e) => updateField("title", e.target.value)}
             required
@@ -96,7 +96,7 @@ export default function NewJobPage() {
         <div className="grid gap-3">
           <label className="text-sm font-medium">Company</label>
           <input
-            className="rounded-lg border px-3 py-2"
+            className="input"
             value={form.company}
             onChange={(e) => updateField("company", e.target.value)}
             required
@@ -107,7 +107,7 @@ export default function NewJobPage() {
         <div className="grid gap-3">
           <label className="text-sm font-medium">Job link (optional)</label>
           <input
-            className="rounded-lg border px-3 py-2"
+            className="input"
             value={form.url}
             onChange={(e) => updateField("url", e.target.value)}
             placeholder="https://example.com/jobs/123"
@@ -117,7 +117,7 @@ export default function NewJobPage() {
         <div className="grid gap-3">
           <label className="text-sm font-medium">Job description</label>
           <textarea
-            className="min-h-[12rem] rounded-lg border px-3 py-2"
+            className="min-h-[12rem] input"
             value={form.raw_text}
             onChange={(e) => updateField("raw_text", e.target.value)}
             required
@@ -130,7 +130,7 @@ export default function NewJobPage() {
         <button
           type="submit"
           disabled={loading}
-          className="w-full rounded-lg bg-black px-4 py-2 font-medium text-white disabled:opacity-60"
+          className="btn-primary w-full disabled:opacity-60"
         >
           {loading ? "Saving..." : "Save job post"}
         </button>

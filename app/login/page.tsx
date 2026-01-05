@@ -30,22 +30,22 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="mx-auto max-w-md rounded-xl bg-white p-6 shadow">
-      <h1 className="text-2xl font-bold">Login</h1>
+    <div className="mx-auto max-w-md glass-card p-8">
+      <h1 className="text-2xl font-bold text-[var(--primary)]">Login</h1>
 
       <form onSubmit={signIn} className="mt-6 space-y-3">
-        <label className="block text-sm font-medium">Email</label>
+        <label className="block text-sm font-medium text-gray-700">Email</label>
         <input
-          className="w-full rounded-lg border px-3 py-2"
+          className="input w-full"
           type="email"
           required
           placeholder="you@example.com"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
-        <label className="block text-sm font-medium">Password</label>
+        <label className="block text-sm font-medium text-gray-700">Password</label>
         <input
-          className="w-full rounded-lg border px-3 py-2"
+          className="input w-full"
           type="password"
           required
           placeholder="••••••••"
@@ -53,14 +53,14 @@ export default function LoginPage() {
           onChange={(e) => setPassword(e.target.value)}
         />
         <button
-          className="w-full rounded-lg bg-black px-4 py-2 font-medium text-white disabled:opacity-60"
+          className="btn-primary w-full disabled:opacity-60"
           disabled={loading}
         >
           {loading ? "Signing in..." : "Login"}
         </button>
       </form>
 
-      {msg && <p className="mt-3 text-sm text-gray-600">{msg}</p>}
+      {msg && <p className="mt-3 text-sm text-red-600">{msg}</p>}
 
       <p className="mt-6 text-sm text-gray-700">
         Don&apos;t have an account?{" "}

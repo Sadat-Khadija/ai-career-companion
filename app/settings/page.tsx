@@ -43,11 +43,11 @@ export default function SettingsPage() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-semibold">Settings</h1>
+        <h1 className="text-3xl font-semibold text-[var(--primary)]">Settings</h1>
         <p className="text-gray-600">Manage your data and privacy.</p>
       </div>
 
-      <div className="rounded-xl border bg-white p-5 space-y-3">
+      <div className="glass-card p-5 space-y-3">
         <p className="text-sm text-gray-700">
           Signed in as <span className="font-medium">{email || "Unknown"}</span>
         </p>

@@ -49,13 +49,16 @@ export default function DashboardPage() {
   }
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h2 className="text-2xl font-semibold">Dashboard</h2>
+        <div>
+          <p className="text-sm text-gray-600">Welcome back</p>
+          <h2 className="text-3xl font-semibold text-[var(--primary)]">Dashboard</h2>
+        </div>
         <div className="flex items-center gap-3">
           <Link
             href="/jobs/new"
-            className="rounded-lg bg-black px-4 py-2 text-sm font-medium text-white hover:opacity-90"
+            className="btn-primary text-sm"
           >
             Add Job
           </Link>
@@ -72,7 +75,7 @@ export default function DashboardPage() {
         Logged in as: <span className="font-medium">{email || "Unknown"}</span>
       </p>
 
-      <div className="rounded-xl border bg-white p-5">
+      <div className="glass-card p-5">
         {loading && <p className="text-gray-600">Loading jobs...</p>}
         {error && <p className="text-sm text-red-600">{error}</p>}
 

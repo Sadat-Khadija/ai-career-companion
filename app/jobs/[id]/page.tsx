@@ -114,6 +114,12 @@ export default function JobDetailPage({
     }
   }
 
+  function handleClearAnalysis() {
+    setAnalysis(null);
+    setResumeResult(null);
+    setError(null);
+  }
+
   async function handleCompareResume() {
     setComparing(true);
     setError(null);
@@ -143,45 +149,63 @@ export default function JobDetailPage({
   };
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-6">
       {loading && <p className="text-gray-600">Loading job...</p>}
       {error && <p className="text-red-600">{error}</p>}
 
       {job && (
         <>
-          <div className="rounded-xl border bg-white p-5">
-            <h2 className="text-2xl font-semibold">{job.title}</h2>
-            <p className="text-gray-700">{job.company}</p>
-            {job.url && (
-              <a
-                className="text-sm text-blue-600 underline"
-                href={job.url}
-                target="_blank"
-                rel="noreferrer"
-              >
-                View posting
-              </a>
-            )}
-            <p className="mt-4 text-sm text-gray-600">
+          <div className="glass-card p-5 space-y-3">
+            <div className="flex flex-wrap items-center justify-between gap-3">
+              <div className="space-y-1">
+                <h2 className="text-3xl font-semibold leading-tight">{job.title}</h2>
+                <p className="text-lg font-medium text-gray-700">{job.company}</p>
+              </div>
+              <div className="flex flex-wrap items-center gap-2">
+                {job.url && (
+                  <a
+                    className="btn-outline text-sm"
+                    href={job.url}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    View posting
+                  </a>
+                )}
+                <Link href="/dashboard" className="btn-outline text-sm">
+                  Back to Dashboard
+                </Link>
+              </div>
+            </div>
+            <span className="inline-flex items-center rounded-full bg-slate-100 px-3 py-1 text-xs font-medium text-gray-600">
               Created {new Date(job.created_at).toLocaleDateString()}
-            </p>
+            </span>
           </div>
 
-          <div className="rounded-xl border bg-white p-5 space-y-3">
+          <div className="glass-card p-5 space-y-3">
             <h3 className="text-lg font-semibold">Job description</h3>
             <p className="mt-2 whitespace-pre-wrap text-gray-700">{job.raw_text}</p>
           </div>
 
-          <div className="rounded-xl border bg-white p-5 space-y-3">
+          <div className="glass-card p-5 space-y-3">
             <div className="flex items-center justify-between">
               <h3 className="text-lg font-semibold">AI analysis</h3>
-              <button
-                className="rounded-lg border px-3 py-1 text-sm font-medium hover:bg-gray-50"
-                onClick={handleAnalyze}
-                disabled={analyzing}
-              >
-                {analyzing ? "Analyzing..." : "Analyze"}
-              </button>
+              <div className="flex gap-2">
+                <button
+                  className="rounded-lg bg-[var(--primary)] px-3 py-1 text-sm font-medium text-white hover:bg-[var(--primary-strong)]"
+                  onClick={handleAnalyze}
+                  disabled={analyzing}
+                >
+                  {analyzing ? "Analyzing..." : "Analyze"}
+                </button>
+                <button
+                  className="rounded-lg border border-[var(--border)] px-3 py-1 text-sm font-medium hover:bg-gray-50"
+                  onClick={handleClearAnalysis}
+                  disabled={analyzing && comparing}
+                >
+                  Clear
+                </button>
+              </div>
             </div>
             {!analysis && <p className="text-gray-600">No analysis yet.</p>}
             {analysis && (
@@ -208,7 +232,7 @@ export default function JobDetailPage({
             )}
           </div>
 
-          <div className="rounded-xl border bg-white p-5 space-y-3">
+          <div className="glass-card p-5 space-y-3">
             <div className="flex items-center justify-between">
               <h3 className="text-lg font-semibold">Resume gap analysis</h3>
               <Link className="text-sm text-blue-600 underline" href="/privacy">
@@ -219,13 +243,13 @@ export default function JobDetailPage({
               Paste your resume text. We only send the resume and job description to the AI.
             </p>
             <textarea
-              className="min-h-[10rem] w-full rounded-lg border px-3 py-2"
+              className="min-h-[10rem] w-full rounded-lg border border-[var(--border)] px-3 py-2 focus:border-[var(--primary)] focus:outline-none"
               placeholder="Paste your resume text here..."
               value={resumeText}
               onChange={(e) => setResumeText(e.target.value)}
             />
             <button
-              className="rounded-lg bg-black px-4 py-2 text-sm font-medium text-white disabled:opacity-60"
+              className="rounded-lg bg-[var(--primary)] px-4 py-2 text-sm font-medium text-white hover:bg-[var(--primary-strong)] disabled:opacity-60"
               onClick={handleCompareResume}
               disabled={comparing || resumeText.trim().length === 0}
             >
