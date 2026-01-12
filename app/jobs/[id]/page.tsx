@@ -1,6 +1,6 @@
 "use client";
 
-import { use, useEffect, useState } from "react";
+import { use, useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { supabase } from "../../lib/supabaseClient";
@@ -41,6 +41,11 @@ export default function JobDetailPage({
   const [analyzing, setAnalyzing] = useState(false);
   const [comparing, setComparing] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [isEditing, setIsEditing] = useState(false);
+  const [editText, setEditText] = useState("");
+  const [savingEdit, setSavingEdit] = useState(false);
+  const [deleting, setDeleting] = useState(false);
+  const editRef = useRef<HTMLTextAreaElement | null>(null);
 
   useEffect(() => {
     async function loadJob() {
@@ -64,6 +69,7 @@ export default function JobDetailPage({
       }
 
       setJob(jobData as Job);
+      setEditText((jobData as Job).raw_text || "");
 
       const { data: analysisData } = await supabase
         .from("ai_analysis")
@@ -138,6 +144,82 @@ export default function JobDetailPage({
     }
   }
 
+  function startEditing() {
+    if (!job) return;
+    setEditText(job.raw_text || "");
+    setIsEditing(true);
+    requestAnimationFrame(() => {
+      editRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
+      editRef.current?.focus();
+    });
+  }
+
+  function cancelEditing() {
+    if (!job) return;
+    setEditText(job.raw_text || "");
+    setIsEditing(false);
+  }
+
+  async function saveEditing() {
+    if (!job) return;
+    setSavingEdit(true);
+    setError(null);
+    try {
+      const { data: userData, error: userError } = await supabase.auth.getUser();
+      if (userError || !userData.user) {
+        router.push("/login");
+        return;
+      }
+
+      const { error: updateError } = await supabase
+        .from("job_posts")
+        .update({ raw_text: editText.trim() })
+        .eq("id", job.id)
+        .eq("user_id", userData.user.id);
+
+      if (updateError) {
+        setError(updateError.message);
+        return;
+      }
+
+      setJob((prev) => (prev ? { ...prev, raw_text: editText.trim() } : prev));
+      setIsEditing(false);
+    } finally {
+      setSavingEdit(false);
+    }
+  }
+
+  async function handleDeleteJob() {
+    if (!job || deleting) return;
+    const confirmed = window.confirm("Delete this job posting? This cannot be undone.");
+    if (!confirmed) return;
+
+    setDeleting(true);
+    setError(null);
+    try {
+      const { data: userData, error: userError } = await supabase.auth.getUser();
+      if (userError || !userData.user) {
+        router.push("/login");
+        return;
+      }
+
+      const { error: deleteError } = await supabase
+        .from("job_posts")
+        .delete()
+        .eq("id", job.id)
+        .eq("user_id", userData.user.id);
+
+      if (deleteError) {
+        setError(deleteError.message);
+        return;
+      }
+
+      router.push("/dashboard");
+    } finally {
+      setDeleting(false);
+    }
+  }
+
   const renderList = (items?: string[] | null) => {
     if (!items || items.length === 0) return <p className="text-gray-600">None.</p>;
     return (
@@ -173,6 +255,21 @@ export default function JobDetailPage({
                     View posting
                   </a>
                 )}
+                <button
+                  type="button"
+                  className="btn-outline text-sm"
+                  onClick={startEditing}
+                >
+                  Edit description
+                </button>
+                <button
+                  type="button"
+                  className="btn-outline text-sm border-red-200 text-red-600 hover:border-red-300 hover:bg-red-50 hover:text-red-700 disabled:opacity-60"
+                  onClick={handleDeleteJob}
+                  disabled={deleting}
+                >
+                  {deleting ? "Deleting..." : "Delete"}
+                </button>
                 <Link href="/dashboard" className="btn-outline text-sm">
                   Back to Dashboard
                 </Link>
@@ -184,8 +281,41 @@ export default function JobDetailPage({
           </div>
 
           <div className="glass-card p-5 space-y-3">
-            <h3 className="text-lg font-semibold">Job description</h3>
-            <p className="mt-2 whitespace-pre-wrap text-gray-700">{job.raw_text}</p>
+            <div className="flex items-center justify-between gap-3">
+              <h3 className="text-lg font-semibold">Job description</h3>
+              <span className="sr-only">Job description</span>
+            </div>
+            {isEditing ? (
+              <div className="space-y-3">
+                <textarea
+                  ref={editRef}
+                  className="min-h-[20rem] w-full input"
+                  value={editText}
+                  onChange={(e) => setEditText(e.target.value)}
+                  placeholder="Paste the full job description here..."
+                />
+                <div className="flex flex-wrap gap-2">
+                  <button
+                    type="button"
+                    className="btn-primary disabled:opacity-60"
+                    onClick={saveEditing}
+                    disabled={savingEdit || editText.trim().length === 0}
+                  >
+                    {savingEdit ? "Saving..." : "Save changes"}
+                  </button>
+                  <button
+                    type="button"
+                    className="rounded-lg border border-[var(--border)] px-3 py-2 text-sm font-medium hover:bg-gray-50"
+                    onClick={cancelEditing}
+                    disabled={savingEdit}
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </div>
+            ) : (
+              <p className="mt-2 whitespace-pre-wrap text-gray-700">{job.raw_text}</p>
+            )}
           </div>
 
           <div className="glass-card p-5 space-y-3">

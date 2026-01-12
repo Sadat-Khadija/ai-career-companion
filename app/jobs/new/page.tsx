@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { supabase } from "../../lib/supabaseClient";
 
@@ -75,11 +76,19 @@ export default function NewJobPage() {
 
   return (
     <div className="mx-auto max-w-2xl space-y-4">
-      <div>
-        <h2 className="text-3xl font-semibold text-[var(--primary)]">Add a Job Posting</h2>
-        <p className="text-gray-600">
-          Paste a job description to analyze required skills.
-        </p>
+      <div className="flex flex-wrap items-start justify-between gap-3">
+        <div>
+          <h2 className="text-3xl font-semibold text-[var(--primary)]">Add a Job Posting</h2>
+          <p className="text-gray-600">
+            Paste a job description to analyze required skills.
+          </p>
+        </div>
+        <Link
+          href="/dashboard"
+          className="rounded-md px-3 py-1 text-sm font-medium text-gray-700 hover:text-[var(--primary)]"
+        >
+          Back to Dashboard
+        </Link>
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-4 glass-card p-6">

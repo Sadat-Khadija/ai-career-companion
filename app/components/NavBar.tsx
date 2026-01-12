@@ -20,7 +20,6 @@ export function NavBar() {
   async function logout() {
     await supabase.auth.signOut();
     setIsAuthed(false);
-    router.push("/login");
   }
 
   return (
@@ -52,17 +51,18 @@ export function NavBar() {
                 Settings
               </Link>
               <Link
+                href="/login"
+                onClick={logout}
+                className="rounded-md px-3 py-1 text-sm font-medium text-gray-700 hover:text-[var(--primary)]"
+              >
+                Logout
+              </Link>
+              <Link
                 href="/privacy"
                 className="rounded-md px-3 py-1 text-sm font-medium text-gray-700 hover:text-[var(--primary)]"
               >
                 Privacy
               </Link>
-              <button
-                onClick={logout}
-                className="rounded-md px-3 py-1 text-sm font-medium text-gray-700 hover:text-[var(--primary)]"
-              >
-                Logout
-              </button>
             </>
           ) : (
             <>

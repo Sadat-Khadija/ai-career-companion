@@ -44,11 +44,6 @@ export default function DashboardPage() {
     loadUser();
   }, [router]);
 
-  async function logout() {
-    await supabase.auth.signOut();
-    router.push("/login");
-  }
-
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
@@ -56,20 +51,9 @@ export default function DashboardPage() {
           <p className="text-sm text-gray-600">Welcome back</p>
           <h2 className="text-3xl font-semibold text-[var(--primary)]">Dashboard</h2>
         </div>
-        <div className="flex items-center gap-3">
-          <Link
-            href="/jobs/new"
-            className="btn-primary text-sm"
-          >
-            Add Job
-          </Link>
-          <button
-            onClick={logout}
-            className="rounded-lg border px-4 py-2 text-sm font-medium hover:bg-gray-50"
-          >
-            Logout
-          </button>
-        </div>
+        <Link href="/jobs/new" className="btn-primary text-sm">
+          Add Job
+        </Link>
       </div>
 
       <p className="text-gray-600">

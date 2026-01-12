@@ -81,7 +81,7 @@ export default function SignupPage() {
         />
 
         <button
-          className="w-full rounded-lg bg-black px-4 py-2 font-medium text-white disabled:opacity-60"
+          className="btn-primary w-full disabled:opacity-60"
           disabled={loading}
         >
           {loading ? "Signing up..." : "Create account"}
