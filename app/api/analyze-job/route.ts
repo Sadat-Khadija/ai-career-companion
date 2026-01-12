@@ -13,6 +13,7 @@ type GroqAnalysis = {
 };
 
 function rateLimit(userId: string) {
+  // Primitive in-memory bucket; restarts clear counts.
   const now = Date.now();
   const bucket = rateBucket.get(userId);
   if (!bucket || bucket.reset < now) {

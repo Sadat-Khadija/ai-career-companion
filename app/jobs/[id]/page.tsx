@@ -21,6 +21,7 @@ type Analysis = {
   checklist: string[] | null;
 };
 
+// Auth-only job detail page: shows job info, AI analysis, and resume comparison.
 export default function JobDetailPage({
   params,
 }: {

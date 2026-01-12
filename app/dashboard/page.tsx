@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { supabase } from "../lib/supabaseClient";
 
+// Auth-only dashboard: greets user, lists their job posts, links to add new.
 export default function DashboardPage() {
   const router = useRouter();
   const [email, setEmail] = useState<string>("");

@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { supabase } from "../lib/supabaseClient";
 
+// Auth-only settings page to let a user delete their stored data.
 export default function SettingsPage() {
   const router = useRouter();
   const [email, setEmail] = useState<string>("");

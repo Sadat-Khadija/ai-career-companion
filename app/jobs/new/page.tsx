@@ -18,6 +18,7 @@ const initialForm: JobForm = {
   raw_text: "",
 };
 
+// Auth-only form to create a new job post in Supabase.
 export default function NewJobPage() {
   const router = useRouter();
   const [form, setForm] = useState<JobForm>(initialForm);

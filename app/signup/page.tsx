@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { supabase } from "../lib/supabaseClient";
 
+// Email/password signup screen with Supabase Auth.
 export default function SignupPage() {
   const router = useRouter();
   const [email, setEmail] = useState("");

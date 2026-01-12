@@ -6,6 +6,7 @@ const PROTECTED = ["/dashboard", "/jobs", "/settings"];
 
 export async function middleware(req: NextRequest) {
   const res = NextResponse.next();
+  // Build a Supabase server client per request so we can read the session cookie.
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 

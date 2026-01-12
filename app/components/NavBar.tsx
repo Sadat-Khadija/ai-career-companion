@@ -74,7 +74,7 @@ export function NavBar() {
               </Link>
               <Link
                 href="/signup"
-                className="rounded-md bg-[var(--primary)] px-3 py-1 text-sm font-medium text-white hover:bg-[var(--primary-strong)]"
+                className="rounded-md px-3 py-1 text-sm font-medium text-gray-700 hover:text-[var(--primary)]"
               >
                 Sign up
               </Link>
